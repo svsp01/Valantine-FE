@@ -23,13 +23,14 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useRouter } from 'next/navigation';
+import * as userService from "../../services/users/UserServices";
 
 
 function UserOnboardComponent() {
     const numbers = Array.from({ length: 79 }, (_, index) => index+12);
     const router = useRouter()
     const formSchema = z.object({
-        username: z.string().min(2, {
+        name: z.string().min(2, {
             message: "Username must be at least 2 characters.",
         }),
         age: z.string().min(1, {
@@ -39,12 +40,23 @@ function UserOnboardComponent() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            name: "",
             age: "",
         },
     })
     function onSubmit(values: z.infer<typeof formSchema>) {
-        router.push('/puzzle');
+        console.log(' User:', values);
+
+        userService.CreateUser(values)
+            .then((response) => {
+                console.log('New User:', response);
+                localStorage.setItem("userId", response?._id)
+                router.push('/puzzle');
+            })
+            .catch((error) => {
+                console.error('Error creating user:', error);
+            });
+
 
         console.log(values)
     }
@@ -58,7 +70,7 @@ function UserOnboardComponent() {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
                             control={form.control}
-                            name="username"
+                            name="name"
 
                             render={({ field }) => (
                                 <FormItem >
@@ -90,7 +102,7 @@ function UserOnboardComponent() {
                                             </SelectTrigger>
                                             <SelectContent   className="w-full h-56 p-0 text-black  focus-visible:ring-0 focus:shadow-none placeholder:text-black bg-white bg-opacity-70 border-none rounded-md py-8 focus:outline-none focus:ring focus:border-pink-300">
                                                 {numbers.map((number: any) =>
-                                                    <SelectItem value={`${number}`}>{number}</SelectItem>
+                                                    <SelectItem key={number} value={`${number}`}>{number}</SelectItem>
                                                 )}
                                             </SelectContent>
                                         </Select>

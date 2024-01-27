@@ -1,42 +1,75 @@
 "use client"
-import React, { useState } from 'react';
-
-const personalityTestQuestions = [
-    { type: 'multipleChoice', question: 'What is your preferred method of communication?', options: ['Phone', 'Email', 'In-person'] },
-    { type: 'textField', question: 'Describe your ideal vacation in one sentence.' },
-    { type: 'boolean', question: 'Do you enjoy working in a team?' },
-    { type: 'multipleChoice', question: 'How do you handle stress?', options: ['Take a break', 'Work through it', 'Seek support'] },
-    { type: 'textField', question: 'What is your biggest accomplishment so far?' },
-    { type: 'boolean', question: 'Are you a morning person?' },
-    { type: 'multipleChoice', question: 'What is your favorite type of music?', options: ['Rock', 'Pop', 'Hip-hop'] },
-    { type: 'textField', question: 'If you could have dinner with any historical figure, who would it be and why?' },
-    { type: 'boolean', question: 'Do you consider yourself a creative person?' },
-    { type: 'multipleChoice', question: 'Which movie genre do you prefer?', options: ['Action', 'Drama', 'Comedy'] },
-];
-
-
-
+import React, { useEffect, useState } from 'react';
+import * as userService from "../../services/users/UserServices";
 
 function PuzzleComponent({ onGameComplete }: any) {
     const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
     const [userAnswers, setUserAnswers] = useState<{ [key: string]: string }>({});
     const [progress, setProgress] = useState(0);
+    const [personalityTestQuestions, setPersonalityTestQuestions]: any = useState([])
 
+    useEffect(()=>{
+        userService.getUserQuestions()
+        .then((response) => {
+            setPersonalityTestQuestions(response)
+        })
+        .catch((error) => {
+            console.error('Error creating user:', error);
+        });
+    }, [])
+    const mapFrontendQuestionToBackendProperty = (frontendQuestion: string) => {
+        switch (frontendQuestion) {
+            case 'Are you a morning person?':
+                return 'morningPerson';
+            case 'Describe your ideal vacation in one sentence.':
+                return 'idealVacation';
+            case 'Do you consider yourself a creative person?':
+                return 'creativePerson';
+            case 'Do you enjoy working in a team?':
+                return 'teamWork';
+            case 'How do you handle stress?':
+                return 'stressHandling';
+            case 'If you could have dinner with any historical figure, who would it be and why?':
+                return 'historicalFigureDinner';
+            case 'What is your biggest accomplishment so far?':
+                return 'biggestAccomplishment';
+            case 'What is your favorite type of music?':
+                return 'favoriteMusic';
+            case 'What is your preferred method of communication?':
+                return 'preferredCommunication';
+            case 'Which movie genre do you prefer?':
+                return 'movieGenrePreference';
+            default:
+                return '';
+        }
+    };
+    
     const handleAnswerSubmit = () => {
         const newProgress = ((currentPuzzleIndex + 1) / personalityTestQuestions.length) * 100;
         setProgress(newProgress);
+        const currentQuestion = personalityTestQuestions[currentPuzzleIndex]?.question;
+
+        const backendPropertyName = mapFrontendQuestionToBackendProperty(currentQuestion);
 
         setUserAnswers((prevAnswers) => ({
             ...prevAnswers,
-            [personalityTestQuestions[currentPuzzleIndex]?.question]: userAnswer,
+            [backendPropertyName]: userAnswer,
         }));
 
         setCurrentPuzzleIndex((prevIndex) => prevIndex + 1);
 
         if (currentPuzzleIndex === personalityTestQuestions.length - 1) {
-            
+            const userId: any = localStorage.getItem("userId")
             console.log('User Answers:', userAnswers);
+            userService.answerById(userId, userAnswers)
+            .then((response) => {
+                console.log(response, "?");
+                setCurrentPuzzleIndex(0)
+            })
+            .catch((error) => {
+                console.error('Error creating user:', error);
+            });
         }else{
             setUserAnswer("")
         }
@@ -45,15 +78,14 @@ function PuzzleComponent({ onGameComplete }: any) {
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-800 to-purple-500 text-white text-center p-8 font-sacramento">
-                <div>
+               {personalityTestQuestions?.length >0 && <div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
                         Puzzle {currentPuzzleIndex + 1}
                     </h1>
                     <p className="text-lg mb-8">{personalityTestQuestions[currentPuzzleIndex]?.question}</p>
-
                     {personalityTestQuestions[currentPuzzleIndex]?.type === 'multipleChoice' && (
                         <div className="flex flex-col">
-                            {personalityTestQuestions[currentPuzzleIndex]?.options?.map((option, index) => (
+                            {personalityTestQuestions[currentPuzzleIndex]?.options?.map((option: string, index: number) => (
                                 <label key={index} className="mb-2">
                                     <input
                                         type="radio"
@@ -115,7 +147,7 @@ function PuzzleComponent({ onGameComplete }: any) {
                         </div>
                         <p className="text-purple-300 text-lg mt-2">{Math.round(progress)}% Completed</p>
                     </div>
-                </div>
+                </div>}
             </div>
         </form>
     );
