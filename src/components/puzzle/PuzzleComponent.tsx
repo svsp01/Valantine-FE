@@ -16,6 +16,7 @@ const personalityTestQuestions = [
 
 
 
+
 function PuzzleComponent({ onGameComplete }: any) {
     const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
