@@ -1,0 +1,14 @@
+/* ValentineComponent.module.css */
+
+.swing {
+  animation: swingAnimation 2s ease-in-out infinite;
+}
+
+@keyframes swingAnimation {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+  }
+}
