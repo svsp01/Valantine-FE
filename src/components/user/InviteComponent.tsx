@@ -29,7 +29,6 @@ function InviteComponent() {
     }
     const [isModalOpen, setModalOpen] = useState(false);
     const shareUrl = 'https://vanta-lovegame.netlify.app'; 
-    const content = 'Share this with your friends!'; 
     const openModal = () => {
         setModalOpen(true);
       };
@@ -134,7 +133,6 @@ function InviteComponent() {
             <ShareModal
                  isOpen={isModalOpen}
              onClose={closeModal}
-                 content={content}
              shareUrl={shareUrl}
       />
     

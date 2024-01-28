@@ -6,13 +6,12 @@ const ShareModal = ({ isOpen, onClose, content, shareUrl }: any) => {
   const [isCopied, setCopied] = useState(false);
 
   const shareOnTelegram = () => {
-    const url = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(content)}`;
+    const url = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}`;
     window.open(url, '_blank');
   };
 
   const shareOnWhatsApp = () => {
-    const previewImage = encodeURIComponent('https://c4.wallpaperflare.com/wallpaper/321/565/203/love-image-heart-4k-wallpaper-preview.jpg');
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${content} ${shareUrl}`)}%26image=${previewImage}`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareUrl}`)}`;
     window.open(url, '_blank');
   };  
 
