@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
+import { useParams } from 'next/navigation';
 import {
     Form,
     FormControl,
@@ -32,7 +32,9 @@ import * as userService from "../../services/users/UserServices";
 function UserOnboardComponent() {
     const [activeRadio, setActiveRadio] = useState("")
     const numbers = Array.from({ length: 79 }, (_, index) => index + 12);
-    const router = useRouter()
+    
+
+    const router: any = useRouter()
     const formSchema = z.object({
         name: z.string().min(2, {
             message: "Username must be at least 2 characters.",
@@ -59,7 +61,11 @@ function UserOnboardComponent() {
             .then((response) => {
                 console.log('New User:', response);
                 localStorage.setItem("userId", response?._id)
-                router.push('/puzzle');
+                    router.push({
+                      pathname: `/${response?._id}/puzzle`,
+                      query: { id: response?._id },
+                    });
+                  
             })
             .catch((error) => {
                 console.error('Error creating user:', error);

@@ -18,7 +18,7 @@ export const getUserQuestions = async () => {
     }
 };
 
-export const answerById = async (id: string, data: any)=>{
+export const answerById = async (id: any, data: any)=>{
     try {
         const response: any = await axios.post(`/useranswers/${id}`, data)
         return response.data;

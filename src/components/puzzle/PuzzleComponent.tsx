@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import * as userService from "../../services/users/UserServices";
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 function PuzzleComponent({ onGameComplete }: any) {
     const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
@@ -10,6 +10,7 @@ function PuzzleComponent({ onGameComplete }: any) {
     const [progress, setProgress] = useState(0);
     const [personalityTestQuestions, setPersonalityTestQuestions]: any = useState([])
     const router = useRouter()
+    const {id } = useParams()
     useEffect(() => {
         userService.getUserQuestions()
             .then((response) => {
@@ -61,9 +62,9 @@ function PuzzleComponent({ onGameComplete }: any) {
 
         setCurrentPuzzleIndex((prevIndex) => prevIndex + 1);
         if (currentPuzzleIndex === personalityTestQuestions.length - 1) {
-            const userId: any = localStorage.getItem("userId")
+            
             console.log('User Answers:', userAnswers);
-            userService.answerById(userId, userAnswers)
+            userService.answerById(id, userAnswers)
                 .then((response) => {
                     console.log(response, "?");
                     setCurrentPuzzleIndex(0)

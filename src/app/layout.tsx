@@ -6,9 +6,14 @@ import heart from "../../public/eze.png"
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata: any = {
   title: "Vanta Love Game",
-  description: "Love game by vanta verse",
+  description: "Love game by Vanta Verse",
+  url: "https://vanta-lovegame.netlify.app/",
+  type: "website",
+  ogTitle: "Love Language and Pair Score Calculation?",
+  ogDescription: "Love Language!! Valentine celebrate",
+  ogImage: "https://img.freepik.com/premium-photo/ai-generated-illustration-love-theme-wallpaper-with-composition-hearts_665346-44721.jpg?size=626&ext=jpg",
 };
 
 export default function RootLayout({
@@ -19,12 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <meta property="og:url" content={"https://vanta-lovegame.netlify.app/user"} />
-        <meta property="og:type" content={"website"} />
+        <meta property="og:url" content={metadata.url} />
+        <meta property="og:type" content={metadata.type} />
         <meta
           property="og:title"
-          content="Love Language and Pair Score Calculation?"/>
-        <meta property="og:image" content={"https://img.freepik.com/premium-photo/ai-generated-illustration-love-theme-wallpaper-with-composition-hearts_665346-44721.jpg?size=626&ext=jpg"} />
+          content={metadata.ogTitle}/>
+        <meta property="og:image" content={metadata.ogImage} />
       </Head>
       <body className={inter.className}>{children}</body>
     </html>
