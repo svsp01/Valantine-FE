@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 import { EnvelopIcon, FriendIcon } from "../common/Icons";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import {  useParams } from 'react-router-dom';
+import {  useParams } from 'next/navigation';
 import LoveLanguage from './LoveLanguage';
+import ShareModal from './ShareModel';
 
 function InviteComponent() {
     const [showModal, setShowModal] = useState(true);
     const router: any =useRouter()
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams();
     console.log('ID from path:', id);
 
 
@@ -23,6 +24,24 @@ function InviteComponent() {
         return () => clearTimeout(timeoutId);
     }, []); 
 
+    const handleLogin = () =>{
+        router.push(`/user/${id}/login`)
+    }
+    const [isModalOpen, setModalOpen] = useState(false);
+    const shareUrl = 'https://vanta-lovegame.netlify.app'; 
+    const content = 'Share this with your friends!'; 
+    const openModal = () => {
+        setModalOpen(true);
+      };
+    
+      const closeModal = () => {
+        setModalOpen(false);
+      };
+    const handlePairButton = () =>{
+    }
+    const handleFriendButton = () =>{
+
+    }
     return (
         <div className='bg-gradient-to-br from-black to-black min-h-screen text-pink-800 flex flex-col items-center justify-center'>
             {showModal && (
@@ -58,6 +77,9 @@ function InviteComponent() {
                 </div>
                 <div className='px-4 md:px-4'>
                     <button
+                    onClick={()=>{
+                        openModal()
+                        handlePairButton()}}
                         className='bg-gradient-to-br w-full flex from-pink-800 to-black text-wrap shadow-pink-500 shadow-md hover:bg-pink-600 text-white text-lg md:text-xl py-2 md:py-4 px-4 rounded-lg mb-4 font-bold'>
                         <div className='flex justify-between items-center w-full px-2'>
                             <div className='w-full text-wrap'>
@@ -74,6 +96,7 @@ function InviteComponent() {
                 </div>
                 <div className='px-4 md:px-0'>
                     <button
+                    onClick={handleFriendButton}
                         className='bg-gradient-to-br from-black to-pink-800 text-wrap shadow-pink-500 shadow-md hover:bg-pink-600 text-white text-lg md:text-xl py-2 md:py-4 rounded-lg px-4 mb-4 font-bold'>
                         <div className='flex justify-between items-center w-full px-2'>
                             <div className='w-full text-wrap'>
@@ -91,7 +114,7 @@ function InviteComponent() {
                 <div className='px-4 md:px-0'>
                     <button
                     onClick={()=>{
-                        router.push(`/${id}/login`)
+                        handleLogin()
                     }}
                         className='bg-gradient-to-br from-black to-pink-800 text-wrap shadow-pink-500 shadow-md hover:bg-pink-600 text-white text-lg md:text-xl py-2 md:py-4 rounded-lg px-4 mb-4 font-bold'>
                         <div className='flex justify-between items-center w-full px-2'>
@@ -108,6 +131,13 @@ function InviteComponent() {
                     ❤️
                 </span>
             </p>
+            <ShareModal
+                 isOpen={isModalOpen}
+             onClose={closeModal}
+                 content={content}
+             shareUrl={shareUrl}
+      />
+    
         </div>
 
     );

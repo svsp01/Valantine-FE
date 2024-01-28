@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import * as userService from "../../services/users/UserServices";
 import { useParams, useRouter } from 'next/navigation';
-
+import {data} from "./dummy"
 function PuzzleComponent({ onGameComplete }: any) {
     const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
@@ -12,13 +12,14 @@ function PuzzleComponent({ onGameComplete }: any) {
     const router = useRouter()
     const {id } = useParams()
     useEffect(() => {
-        userService.getUserQuestions()
-            .then((response) => {
-                setPersonalityTestQuestions(response)
-            })
-            .catch((error) => {
-                console.error('Error creating user:', error);
-            });
+        setPersonalityTestQuestions(data)
+        // userService.getUserQuestions()
+        //     .then((response) => {
+        //         setPersonalityTestQuestions(response)
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error creating user:', error);
+        //     });
     }, [])
 
     const mapFrontendQuestionToBackendProperty = (frontendQuestion: string) => {
@@ -64,17 +65,18 @@ function PuzzleComponent({ onGameComplete }: any) {
         if (currentPuzzleIndex === personalityTestQuestions.length - 1) {
             
             console.log('User Answers:', userAnswers);
-            userService.answerById(id, userAnswers)
-                .then((response) => {
-                    console.log(response, "?");
-                    setCurrentPuzzleIndex(0)
-                    setProgress(0)
-                    const id = localStorage.getItem("userId")
-                    router.push(`/user/${id}/invite`)
-                })
-                .catch((error) => {
-                    console.error('Error creating user:', error);
-                });
+            router.push(`/user/${id}/invite`)
+            // userService.answerById(id, userAnswers)
+            //     .then((response) => {
+            //         console.log(response, "?");
+            //         setCurrentPuzzleIndex(0)
+            //         setProgress(0)
+            //         const id = localStorage.getItem("userId")
+            //         router.push(`/user/${id}/invite`)
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error creating user:', error);
+            //     });
         } else {
             setUserAnswer("")
         }

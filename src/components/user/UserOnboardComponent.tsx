@@ -32,7 +32,7 @@ import * as userService from "../../services/users/UserServices";
 function UserOnboardComponent() {
     const [activeRadio, setActiveRadio] = useState("")
     const numbers = Array.from({ length: 79 }, (_, index) => index + 12);
-    
+
 
     const router: any = useRouter()
     const formSchema = z.object({
@@ -56,20 +56,16 @@ function UserOnboardComponent() {
     })
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(' User:', values);
-
-        userService.CreateUser(values)
-            .then((response) => {
-                console.log('New User:', response);
-                localStorage.setItem("userId", response?._id)
-                    router.push({
-                      pathname: `/${response?._id}/puzzle`,
-                      query: { id: response?._id },
-                    });
-                  
-            })
-            .catch((error) => {
-                console.error('Error creating user:', error);
-            });
+        router.push(`/user/65b66cc80229095f3c7ca570/puzzle`);
+        // userService.CreateUser(values)
+        //     .then((response) => {
+        //         console.log('New User:', response);
+        //         localStorage.setItem("userId", response?._id)
+        //             router.push(`/user/${response?._id}/puzzle`);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error creating user:', error);
+        //     });
 
 
         console.log(values)
@@ -154,13 +150,13 @@ function UserOnboardComponent() {
                                                 )}
                                             </SelectContent>
                                         </Select>
-
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <button type="submit" className="bg-pink-500 w-full hover:bg-pink-600 text-white text-2xl shadow-pink-400 shadow-lg font-bold py-2 px-4 rounded-xl transition duration-300 focus:outline-none">
+                        <button type="submit"
+                            className='bg-gradient-to-br hover:scale-105  from-black w-full to-pink-800 text-wrap shadow-pink-500 shadow-md hover:bg-pink-600 text-white text-lg md:text-xl py-2 md:py-4 rounded-lg px-4 mb-4 font-bold'>
                             Start Game
                         </button>
                     </form>

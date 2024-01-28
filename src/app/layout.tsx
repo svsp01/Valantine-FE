@@ -7,7 +7,7 @@ import heart from "../../public/eze.png"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: any = {
-  title: "Vanta Love Game",
+  title: "Play Love game with your Pair",
   description: "Love game by Vanta Verse",
   url: "https://vanta-lovegame.netlify.app/",
   type: "website",
