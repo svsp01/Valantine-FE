@@ -45,7 +45,7 @@ function ScoreComponent({ score }: any) {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
                     {suggestions.map((suggestion, index) => (
-                        <div className="flex justify-center items-center ">
+                        <div key={index} className="flex justify-center items-center ">
                             <Card
                                 title={suggestion.title}
                                 description={suggestion.description}

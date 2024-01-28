@@ -13,7 +13,7 @@ function InviteComponent() {
         Your Love Language has been Captured!
       </h2>
       <p className='mt-2 text-pink-200 text-lg md:text-xl font-semibold'>
-        Now, let's play and share the love!
+        Now, let&aposs play and share the love!
       </p>
     </div>
     <div className='flex flex-col md:w-full px-2 w-full items-center mb-8'>
