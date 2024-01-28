@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from '../ui/input';
 import heart from "../../../public/decoration.png";
 import Image from 'next/image';
@@ -28,12 +28,24 @@ import {
 import { useRouter } from 'next/navigation';
 import * as userService from "../../services/users/UserServices";
 
-
 function UserOnboardComponent() {
     const [activeRadio, setActiveRadio] = useState("")
+    const [inviterName, setInviterName] = useState("")
     const numbers = Array.from({ length: 79 }, (_, index) => index + 12);
-
-
+    const {id}  = useParams()
+useEffect(()=>{
+    if(id){
+        userService.GetUserByID(id)
+            .then((response) => {
+                console.log('userbyID:', response);
+                setInviterName(response.name)
+            })
+            .catch((error) => {
+                console.error('Error creating user:', error);
+            });
+    }
+},[id])
+    
     const router: any = useRouter()
     const formSchema = z.object({
         name: z.string().min(2, {
@@ -57,24 +69,30 @@ function UserOnboardComponent() {
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(' User:', values);
         router.push(`/user/65b66cc80229095f3c7ca570/puzzle`);
+        if(id){
+            router.push(`/user/${(id)}/65b66cc80229095f3c7ca570/puzzle`);
+        }
         // userService.CreateUser(values)
         //     .then((response) => {
         //         console.log('New User:', response);
-        //         localStorage.setItem("userId", response?._id)
-        //             router.push(`/user/${response?._id}/puzzle`);
+        //         if(id){
+        //             router.push(`/user/${(id)}/${response?._id}/puzzle`);
+        //         }
         //     })
         //     .catch((error) => {
         //         console.error('Error creating user:', error);
-        //     });
-
-
+        //     })
         console.log(values)
     }
     return (
         <div className=" flex px-10 items-center justify-center min-h-screen bg-black text-white text-center p-8 font-sacramento relative">
             <div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl text-left font-extrabold mb-4 relative z-10">
-                    <span className="bg-gradient-to-r text-transparent bg-clip-text from-pink-500 to-red-500 ">Welcome to Love Game!</span>
+                <h1 className="text-xl md:text-5xl lg:text-6xl text-left font-extrabold mb-4 relative z-10">
+                {  inviterName !== "" ?  
+                    <span className="bg-gradient-to-r w-full text-wrap text-transparent bg-clip-text from-pink-500 to-red-500 ">Play with {inviterName}!</span>
+                :<span className="bg-gradient-to-r text-transparent bg-clip-text from-pink-500 to-red-500 ">Welcome to Love Game!</span>
+
+                }
                 </h1>
                 <Form {...form} >
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

@@ -11,6 +11,8 @@ function PuzzleComponent({ onGameComplete }: any) {
     const [personalityTestQuestions, setPersonalityTestQuestions]: any = useState([])
     const router = useRouter()
     const {id } = useParams()
+    const {pair_id } = useParams()
+
     useEffect(() => {
         setPersonalityTestQuestions(data)
         // userService.getUserQuestions()
@@ -65,7 +67,11 @@ function PuzzleComponent({ onGameComplete }: any) {
         if (currentPuzzleIndex === personalityTestQuestions.length - 1) {
             
             console.log('User Answers:', userAnswers);
-            router.push(`/user/${id}/invite`)
+            if(pair_id !== undefined ){
+                router.push(`/user/${pair_id}/invite`)
+            }else{
+                router.push(`/user/${id}/invite`)
+            }
             // userService.answerById(id, userAnswers)
             //     .then((response) => {
             //         console.log(response, "?");

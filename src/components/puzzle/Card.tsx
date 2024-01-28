@@ -1,45 +1,45 @@
 import Image from "next/image";
 import { useState } from "react";
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
-const CardAccordionContent = ({ description }: any) => (
-    <div className="text-white text-center transition-all ease-in-out duration-3000">
-        <p className="mt-2">{description}</p>
-    </div>
-);
-export const Card = ({ imageUrl, title, description, }: any) => {
+
+
+
+export const Card = ({ imageUrl, title, description }: any) => {
 
 
     return (
+        <Dialog>
+            <DialogTrigger className="w-full">
+                <div className="w-full bg-black shadow-lg mb-10  cursor-pointer rounded-lg overflow-hidden border-t-4 border-pink-600 shadow-pink-700  ">
+                    <div className="w-full" >
+                        <div className="flex justify-center" >
+                            <Image src={imageUrl} alt="Card" className="w-32" />
+                        </div>
+                        <div className="p-4">
+                            <div className="flex justify-between items-center">
+                                <div className="text-lg text-pink-800 font-bold">{title}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </DialogTrigger>
+            <DialogContent className="bg-black text-white rounded-2xl border-pink-400 shadow-pink-600 shadow-lg">
+                <DialogTitle>{title}</DialogTitle>
+                <DialogDescription>
+                    {description}
+                </DialogDescription>
 
-        <div className="w-full bg-gradient-to-br cursor-pointer rounded-lg from-pink-500 to-pink-600 animate-gradient infinite p-2 shadow-pink-700 shadow-sm transition-transform transform hover:scale-105 hover:shadow-2xl">
-            <div className="w-full ">
-                            <div className="w-full flex  justify-center">
-                                <Image src={imageUrl} alt="Card" className="w-32" />
-                            </div>
-                <Accordion type="single" collapsible>
-                    <AccordionItem value={title}>
-                        <AccordionTrigger className="item-end flex">
-                            <div className="">
-                            <div className="flex justify-between">
-                                <div>
-                                    {title}
-                                </div>
-                            </div>
-                            </div>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                             <CardAccordionContent description={description} />
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </div>
-        </div>
+            </DialogContent>
+        </Dialog>
+
     );
 };

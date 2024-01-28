@@ -3,7 +3,7 @@ import React from 'react'
 
 function page() {
   return (
-    <div><ScoreComponent score={50}/></div>
+    <div><ScoreComponent /></div>
   )
 }
 

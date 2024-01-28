@@ -2,12 +2,13 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 
 
 function LoginComponent() {
   const {id} = useParams()
+  const router = useRouter()
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string()
@@ -20,7 +21,7 @@ function LoginComponent() {
   const handleLogin = (values: any) => {
     console.log('Form values:', values);
     console.log(id, "userID");
-    
+    router.push(`/user/${id}/dashboard`)
   };
 
   return (
