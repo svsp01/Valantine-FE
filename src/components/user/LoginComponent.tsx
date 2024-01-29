@@ -21,6 +21,7 @@ function LoginComponent() {
   const handleLogin = (values: any) => {
     console.log('Form values:', values);
     console.log(id, "userID");
+    localStorage.setItem("UserToken", "nciaesdnciadsjasd")
     router.push(`/user/${id}/dashboard`)
   };
 

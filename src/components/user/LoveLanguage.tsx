@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import loveCard from '../../../public/decoration.png';
 import { useRouter } from 'next/navigation'; 
 
@@ -8,8 +8,11 @@ function LoveLanguage() {
   const [authenticated, setAuthenticated] = useState(false);
   const router:any = useRouter();
 
+  useEffect(()=>{
+    localStorage.getItem("UserToken")
+  },[])
+  
   const handleLogin = () => {
-    setAuthenticated(true);
     router.push('/user/fsdafds/login')
   };
 

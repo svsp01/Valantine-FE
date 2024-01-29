@@ -18,9 +18,19 @@ export const getUserQuestions = async () => {
     }
 };
 
+
 export const GetUserByID = async (id:any) => {
     try {
         const response: any = await axios.get(`/users/${id}`)
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const GenerateCardByID = async (id:any) => {
+    try {
+        const response: any = await axios.get(`/users/${id}/love-language-card`)
         return response.data;
     } catch (error) {
         throw error;
