@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import heart from "../../public/eze.png"
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +29,12 @@ export default function RootLayout({
         <meta property="og:type" content={metadata.type} />
         <meta
           property="og:title"
-          content={metadata.ogTitle}/>
+          content={metadata.ogTitle} />
         <meta property="og:image" content={metadata.ogImage} />
+        <Script type='text/javascript' src='//pl22318896.toprevenuegate.com/e0/87/61/e08761e5b969250059ddc10f4a9142fa.js'
+        strategy="beforeInteractive" 
+        />
+
       </Head>
 
       <body className={inter.className}>

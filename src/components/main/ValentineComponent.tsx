@@ -9,28 +9,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 function ValentineComponent() {
-    useEffect(() => {
-        const scriptContent = `
-          atOptions = {
-            'key': 'bfa31b5a14c8f373833f01d5f4b2f98d',
-            'format': 'iframe',
-            'height': 250,
-            'width': 300,
-            'params': {}
-          };
-          document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/bfa31b5a14c8f373833f01d5f4b2f98d/invoke.js"></scr' + 'ipt>');
-        `;
     
-        const scriptElement = document.createElement('script');
-        scriptElement.type = 'text/javascript';
-        scriptElement.innerHTML = scriptContent;
-    
-        document.body.appendChild(scriptElement);
-    
-        return () => {
-          document.body.removeChild(scriptElement);
-        };
-      }, []);
 
     return (
         <div className={`flex flex-col bg-black items-center justify-center min-h-screen bg-dark  text-center p-8 font-sacramento relative `}>
