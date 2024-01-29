@@ -31,7 +31,9 @@ export default function RootLayout({
           content={metadata.ogTitle}/>
         <meta property="og:image" content={metadata.ogImage} />
       </Head>
-      <body className={inter.className}>{children}</body>
+
+      <body className={inter.className}>
+        {children}</body>
     </html>
   );
 }
